@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -20,6 +20,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IpAddresses.Domain\IpAddresses.Domain.csproj" />
+    <ProjectReference Include="..\IpStackService\IpStackService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="IpStackService">
+      <HintPath>..\IpStackService\bin\Debug\net6.0-windows\IpStackService.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

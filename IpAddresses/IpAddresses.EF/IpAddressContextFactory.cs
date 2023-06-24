@@ -10,7 +10,7 @@ namespace IpAddresses.EF
 {
     public class IpAddressContextFactory : IDesignTimeDbContextFactory<IpAddressDBContext>
     {
-        public IpAddressDBContext CreateDbContext(string[] args)
+        public IpAddressDBContext CreateDbContext(string[] args = null)
         {
             var options = new DbContextOptionsBuilder<IpAddressDBContext>();
             options.UseSqlServer("Server=.; Database=IpAddressesDB; Trusted_Connection=True");
