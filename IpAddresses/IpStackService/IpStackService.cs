@@ -18,20 +18,17 @@ namespace IpStackService
         }
         public async Task<IpAddress?> GetIpAddress(string ipAddress)
         {
-            string accessKey = ConfigurationManager.AppSettings.Get("AccessKey"); ;
+            string accessKey = "80c9d357fcf5de8f4d8e5a517c9f14e8";
 
-            string url = $"http://api.ipstack.com/{ipAddress}?access_key={accessKey}";
+            string url = $"http://api.ipstack.com/{ipAddress}?access_key={accessKey}";  
 
             try
             {
                 using var client = new HttpClient();
-                // Send the HTTP GET request
                 HttpResponseMessage response = await client.GetAsync(url);
 
-                // Check if the request was successful (status code 200)
                 if (response.IsSuccessStatusCode)
                 {
-                    // Access and print the JSON response
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var ipAddressObject = JsonConvert.DeserializeObject<IpAddress>(responseBody);
                     return ipAddressObject;
