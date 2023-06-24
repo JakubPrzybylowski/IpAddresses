@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ip.Addresses.UI.ViewModels;
+using Ip.Addresses.UI.Views;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,16 @@ namespace Ip.Addresses.UI
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            MainWindow = new Main()
+            {
+                DataContext = new MainViewModel()
+            };
+
+            MainWindow.Show();
+
+            base.OnStartup(e);
+        }
     }
 }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Ip.Addresses.UI
+namespace Ip.Addresses.UI.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for IPDetailsView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class IPDetailsView : UserControl
     {
-        public MainWindow()
+        public IPDetailsView()
         {
             InitializeComponent();
         }

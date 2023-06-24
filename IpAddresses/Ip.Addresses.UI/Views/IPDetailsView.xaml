@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="Ip.Addresses.UI.Views.IPDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ip.Addresses.UI.Views" 
+             xmlns:validators="clr-namespace:Ip.Addresses.UI.ViewModels.ValidatorsRule" xmlns:viewmodels="clr-namespace:Ip.Addresses.UI.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <viewmodels:IPDetailsViewModel x:Key="vm"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <Button
+            Padding="10 5"
+            Command="{Binding SubmitIPAddressCommand}"
+            Content="Submit" Width="105" Height="35">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding (Validation.HasError), ElementName=tbIPAddress}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="btnDelete" Content="Delete" Command="{Binding DeleteIpAddressCommand}" Margin="5" IsEnabled="False" Height="35" Width="55"/>
+            <Button x:Name="btnGet" Content="Get" Command="{Binding GetIpAddressesCommand}" Margin="5" Height="25" Width="77"/>
+        </StackPanel>
+
+        <!-- IP Input -->
+        <TextBox
+                x:Name="tbIPAddress"
+                Margin="290,0,195,0"
+                Padding="2" Height="30" VerticalAlignment="Center" RenderTransformOrigin="0.556,1.667">
+            <TextBox.Text>
+                <Binding Path="IPAddressInput" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:IpValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+
+        <!-- Table -->
+        <Grid DataContext="{StaticResource vm}" Margin="0,95,0,155" Grid.Row="1">
+            <DataGrid x:Name="dgAdresses" ItemsSource="{Binding IpAddresses, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="false" Margin="0,-90,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="auto" Header="Ip" Binding="{Binding Ip}"/>
+                    <DataGridTextColumn Width="auto" Header="HostName" Binding="{Binding HostName}"/>
+                    <DataGridTextColumn Width="auto" Header="Type" Binding="{Binding Type}"/>
+                    <DataGridTextColumn Width="auto" Header="Continent Code" Binding="{Binding ContinentCode}"/>
+                    <DataGridTextColumn Width="auto" Header="Continent Name" Binding="{Binding ContinentName}"/>
+                    <DataGridTextColumn Width="auto" Header="Country Code" Binding="{Binding CountryCode}"/>
+                    <DataGridTextColumn Width="auto" Header="Country Name" Binding="{Binding CountryName}"/>
+                    <DataGridTextColumn Width="auto" Header="Region Code" Binding="{Binding RegionCode}"/>
+                    <DataGridTextColumn Width="auto" Header="Region Name" Binding="{Binding RegionName}"/>
+                    <DataGridTextColumn Width="auto" Header="City" Binding="{Binding City}"/>
+                    <DataGridTextColumn Width="auto" Header="Zip" Binding="{Binding Zip}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+
+</UserControl>

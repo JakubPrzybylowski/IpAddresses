@@ -7,4 +7,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IpAddresses.Domain\IpAddresses.Domain.csproj" />
+    <ProjectReference Include="..\IpAddresses.EF\IpAddresses.EF.csproj" />
+  </ItemGroup>
+
 </Project>
