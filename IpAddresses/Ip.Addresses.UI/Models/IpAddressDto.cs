@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ip.Addresses.UI.Models
 {
-    public class IpAddressDto : INotifyPropertyChanged
+    public class IpAddressDto
     {
         public string Ip { get; set; }
         public string Type { get; set; }
@@ -19,7 +19,5 @@ namespace Ip.Addresses.UI.Models
         public string RegionName { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

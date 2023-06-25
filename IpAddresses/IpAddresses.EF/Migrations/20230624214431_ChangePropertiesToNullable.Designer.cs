@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IpAddresses.EF.Migrations
 {
     [DbContext(typeof(IpAddressDBContext))]
-    [Migration("20230624175842_Initial")]
-    partial class Initial
+    [Migration("20230624214431_ChangePropertiesToNullable")]
+    partial class ChangePropertiesToNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

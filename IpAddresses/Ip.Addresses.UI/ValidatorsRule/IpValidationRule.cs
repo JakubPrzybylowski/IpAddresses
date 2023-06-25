@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Ip.Addresses.UI.ViewModels.ValidatorsRule
+namespace Ip.Addresses.UI.ValidatorsRule
 {
     internal class IpValidationRule : ValidationRule
     {

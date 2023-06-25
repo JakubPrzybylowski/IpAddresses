@@ -20,7 +20,7 @@
         <StackPanel Orientation="Horizontal" Margin="10">
             <Button
             Padding="10 5"
-            Command="{Binding SubmitIPAddressCommand}"
+            Command="{Binding SubmitIpAddressCommand}"
             Content="Submit" Width="105" Height="35">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -32,8 +32,8 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="btnDelete" Content="Delete" Command="{Binding DeleteIpAddressCommand}" Margin="5" IsEnabled="False" Height="35" Width="55"/>
-            <Button x:Name="btnGet" Content="Get" Command="{Binding GetIpAddressesCommand}" Margin="5" Height="25" Width="77"/>
+            <Button x:Name="btnDelete" Content="Delete" Command="{Binding DeleteIpAddressCommand}" Margin="5" IsEnabled="{Binding DeleteBtnIsEnable}" Height="35" Width="55"/>
+            <Button x:Name="btnGet" Content="Get" Command="{Binding GetIpAddressCommand}" Margin="5" Height="25" Width="77"/>
         </StackPanel>
 
         <!-- IP Input -->
@@ -52,23 +52,23 @@
 
 
         <!-- Table -->
-        <Grid DataContext="{StaticResource vm}" Margin="0,95,0,155" Grid.Row="1">
-            <DataGrid x:Name="dgAdresses" ItemsSource="{Binding IpAddresses, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="false" Margin="0,-90,0,0">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="auto" Header="Ip" Binding="{Binding Ip}"/>
-                    <DataGridTextColumn Width="auto" Header="HostName" Binding="{Binding HostName}"/>
-                    <DataGridTextColumn Width="auto" Header="Type" Binding="{Binding Type}"/>
-                    <DataGridTextColumn Width="auto" Header="Continent Code" Binding="{Binding ContinentCode}"/>
-                    <DataGridTextColumn Width="auto" Header="Continent Name" Binding="{Binding ContinentName}"/>
-                    <DataGridTextColumn Width="auto" Header="Country Code" Binding="{Binding CountryCode}"/>
-                    <DataGridTextColumn Width="auto" Header="Country Name" Binding="{Binding CountryName}"/>
-                    <DataGridTextColumn Width="auto" Header="Region Code" Binding="{Binding RegionCode}"/>
-                    <DataGridTextColumn Width="auto" Header="Region Name" Binding="{Binding RegionName}"/>
-                    <DataGridTextColumn Width="auto" Header="City" Binding="{Binding City}"/>
-                    <DataGridTextColumn Width="auto" Header="Zip" Binding="{Binding Zip}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+        <Grid Grid.Row="1">
+            <ListView ItemsSource="{Binding Path=IpAddresses}" SelectedItem="{Binding Path=SelectedIpAddress}" Margin="-11,79,11,-79">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="80" Header="Ip" DisplayMemberBinding="{Binding Ip}"/>
+                        <GridViewColumn Width="80" Header="Type" DisplayMemberBinding="{Binding Type}"/>
+                        <GridViewColumn Width="80" Header="ContinentCode" DisplayMemberBinding="{Binding ContinentCode}"/>
+                        <GridViewColumn Width="80" Header="ContinentName" DisplayMemberBinding="{Binding ContinentName}"/>
+                        <GridViewColumn Width="80" Header="CountryCode" DisplayMemberBinding="{Binding CountryCode}"/>
+                        <GridViewColumn Width="80" Header="CountryName" DisplayMemberBinding="{Binding CountryName}"/>
+                        <GridViewColumn Width="80" Header="RegionCode" DisplayMemberBinding="{Binding RegionCode}"/>
+                        <GridViewColumn Width="80" Header="RegionName" DisplayMemberBinding="{Binding RegionName}"/>
+                        <GridViewColumn Width="80" Header="City" DisplayMemberBinding="{Binding City}"/>
+                        <GridViewColumn Width="80" Header="Zip" DisplayMemberBinding="{Binding Zip}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
     </Grid>
-
 </UserControl>

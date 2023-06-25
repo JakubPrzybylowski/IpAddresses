@@ -1,26 +1,18 @@
-﻿using Ip.Addresses.UI.ViewModels;
-using Ip.Addresses.UI.ViewModels.Mappers;
-using IpAddresses.Domain.Services;
+﻿using Ip.Addresses.UI.Mappers;
+using Ip.Addresses.UI.ViewModels;
 using IpAddresses.EF.Services;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Ip.Addresses.UI.Commands
 {
-    public class SubmitIPAddressCommand : CommandBase
+    public class SubmitIpAddressCommand : CommandBase
     {
-        private IPDetailsViewModel _viewModel;  
-        private  IIpAddressService _ipAddressService;
-        private IPDetailMapper _mapper;
+        private readonly IPDetailsViewModel _viewModel;
+        private readonly IIpAddressService _ipAddressService;
+        private readonly IPDetailMapper _mapper;
 
-        public SubmitIPAddressCommand(IPDetailsViewModel viewModel, IPDetailMapper mapper, IIpAddressService service)
+        public SubmitIpAddressCommand(IPDetailsViewModel viewModel, IPDetailMapper mapper, IIpAddressService service)
         {
             _viewModel = viewModel;
             _ipAddressService = service;
@@ -28,7 +20,20 @@ namespace Ip.Addresses.UI.Commands
         }
         public async override void Execute(object parameter)
         {
-            await _ipAddressService.Create(_viewModel.IPAddressInput);
+            try
+            {
+                var ipAddress = await _ipAddressService.Create(_viewModel.IPAddressInput);
+                if (ipAddress == null)
+                {
+                    MessageBox.Show($"Cound not find IpAddress with Ip: {_viewModel.IPAddressInput}");
+                    return;
+                }
+                _viewModel.IpAddresses.Add(_mapper.Map(ipAddress));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Ip.Addresses.UI.ViewModels.Mappers
+namespace Ip.Addresses.UI.Mappers
 {
     public interface IMapper<TFirst, TSecond>
     {

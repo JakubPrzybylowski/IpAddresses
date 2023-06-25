@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ip.Addresses.UI.ViewModels.Mappers
+namespace Ip.Addresses.UI.Mappers
 {
-    public abstract  class MapperBase<TFirst, TSecond> : IMapper<TFirst, TSecond>
+    public abstract class MapperBase<TFirst, TSecond> : IMapper<TFirst, TSecond>
     {
         public abstract TFirst Map(TSecond element);
         public abstract TSecond Map(TFirst element);
