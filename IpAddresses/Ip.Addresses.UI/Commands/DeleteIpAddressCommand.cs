@@ -7,20 +7,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Ip.Addresses.UI.Mappers;
+using Ip.Addresses.UI.DialogServices;
 
 namespace Ip.Addresses.UI.Commands
 {
-    class DeleteIpAddressCommand : CommandBase
+    public class DeleteIpAddressCommand : CommandBase
     {
         private readonly IPDetailsViewModel _viewModel;
         private readonly IIpAddressService _ipAddressService;
         private readonly IPDetailMapper _mapper;
+        private readonly IDialogService _dialogService;
 
-        public DeleteIpAddressCommand(IPDetailsViewModel viewModel, IPDetailMapper mapper, IIpAddressService service)
+        public DeleteIpAddressCommand(IPDetailsViewModel viewModel, IPDetailMapper mapper, IIpAddressService service, IDialogService dialogService)
         {
             _viewModel = viewModel;
             _ipAddressService = service;
             _mapper = mapper;
+            _dialogService = dialogService;
         }
         public override async void Execute(object parameter)
         {
@@ -31,17 +34,17 @@ namespace Ip.Addresses.UI.Commands
                 var isDeleted = await _ipAddressService.Delete(ipAddress);
                 if (!isDeleted)
                 {
-                    MessageBox.Show($"Could not delete IpAddress (Ip: {_viewModel.SelectedIpAddress.Ip}");
+                    _dialogService.ShowMessageBox($"Could not delete IpAddress (Ip: {_viewModel.SelectedIpAddress.Ip}");
                 }
                 else
                 {
-                    MessageBox.Show($"IpAddress with Ip: {_viewModel.SelectedIpAddress.Ip} has been deleted");
+                    _dialogService.ShowMessageBox($"IpAddress with Ip: {_viewModel.SelectedIpAddress.Ip} has been deleted");
                     _viewModel.IpAddresses.Remove(_viewModel.SelectedIpAddress);
                 }
             }
             catch (Exception ex) 
             {
-                MessageBox.Show(ex.Message );
+                _dialogService.ShowMessageBox(ex.Message );
             }
         }
     }

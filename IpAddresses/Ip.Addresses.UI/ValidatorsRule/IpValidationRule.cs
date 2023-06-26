@@ -7,9 +7,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Ip.Addresses.UI.ValidatorsRule
+namespace Ip.Addresses.UI.ViewModels.ValidatorsRule
 {
-    internal class IpValidationRule : ValidationRule
+    public class IpValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

@@ -1,4 +1,5 @@
-﻿using Ip.Addresses.UI.Mappers;
+﻿using Ip.Addresses.UI.DialogServices;
+using Ip.Addresses.UI.Mappers;
 using Ip.Addresses.UI.Models;
 using Ip.Addresses.UI.ViewModels;
 using IpAddresses.EF.Services;
@@ -12,17 +13,19 @@ using System.Windows.Data;
 
 namespace Ip.Addresses.UI.Commands
 {
-    internal class GetIpAddressCommand : CommandBase
+    public class GetIpAddressCommand : CommandBase
     {
         private readonly IPDetailsViewModel _viewModel;
         private readonly IIpAddressService _ipAddressService;
         private readonly IPDetailMapper _mapper;
+        private readonly IDialogService _dialogService;
 
-        public GetIpAddressCommand(IPDetailsViewModel viewModel, IPDetailMapper mapper, IIpAddressService service)
+        public GetIpAddressCommand(IPDetailsViewModel viewModel, IPDetailMapper mapper, IIpAddressService service, IDialogService dialogService)
         {
             _viewModel = viewModel;
             _ipAddressService = service;
             _mapper = mapper;
+            _dialogService = dialogService;
         }
         public override async void Execute(object parameter)
         {
@@ -32,9 +35,9 @@ namespace Ip.Addresses.UI.Commands
                 var ipAddressesDto = _mapper.Map(ipAddresses.ToList());
                 _viewModel.IpAddresses = new System.Collections.ObjectModel.ObservableCollection<IpAddressDto>(ipAddressesDto);
             }
-            catch(Exception ex) 
-            { 
-                MessageBox.Show(ex.Message); 
+            catch (Exception ex) 
+            {
+                _dialogService.ShowMessageBox(ex.Message);
             }
             
         }

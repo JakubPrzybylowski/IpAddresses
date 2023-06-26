@@ -11,16 +11,24 @@ namespace IpAddresses.EF.Services
 
         public IpAddressService()
         {
-            _ipAddressService = new GenericDataService<IpAddress>(new IpAddressContextFactory());
-            _ipStackService = new IpStackService.IpStackService();
+
+        }
+        public IpAddressService(IIpStackService service, IBaseDataService<IpAddress> baseDataService)
+        {
+            _ipAddressService = baseDataService;
+            _ipStackService = service;
         }
 
         public async Task<IpAddress?> Create(string ip)
         {
             try
             {
+                if(ip == null || ip == "") 
+                {
+                    return null;
+                }
                 var ipAddress = await _ipStackService.GetIpAddress(ip);
-                if (ipAddress.Ip == null)
+                if (ipAddress == null || ipAddress.Ip == null)
                 {
                     return null;
                 }

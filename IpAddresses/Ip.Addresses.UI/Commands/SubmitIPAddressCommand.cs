@@ -1,4 +1,5 @@
-﻿using Ip.Addresses.UI.Mappers;
+﻿using Ip.Addresses.UI.DialogServices;
+using Ip.Addresses.UI.Mappers;
 using Ip.Addresses.UI.ViewModels;
 using IpAddresses.EF.Services;
 using System;
@@ -11,12 +12,14 @@ namespace Ip.Addresses.UI.Commands
         private readonly IPDetailsViewModel _viewModel;
         private readonly IIpAddressService _ipAddressService;
         private readonly IPDetailMapper _mapper;
+        private readonly IDialogService _dialogService;
 
-        public SubmitIpAddressCommand(IPDetailsViewModel viewModel, IPDetailMapper mapper, IIpAddressService service)
+        public SubmitIpAddressCommand(IPDetailsViewModel viewModel, IPDetailMapper mapper, IIpAddressService service, IDialogService dialogService)
         {
             _viewModel = viewModel;
             _ipAddressService = service;
             _mapper = mapper;
+            _dialogService = dialogService;
         }
         public async override void Execute(object parameter)
         {
@@ -25,14 +28,14 @@ namespace Ip.Addresses.UI.Commands
                 var ipAddress = await _ipAddressService.Create(_viewModel.IPAddressInput);
                 if (ipAddress == null)
                 {
-                    MessageBox.Show($"Cound not find IpAddress with Ip: {_viewModel.IPAddressInput}");
+                    _dialogService.ShowMessageBox($"Cound not find IpAddress with Ip: {_viewModel.IPAddressInput}");
                     return;
                 }
                 _viewModel.IpAddresses.Add(_mapper.Map(ipAddress));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                _dialogService.ShowMessageBox(ex.Message);
             }
         }
     }

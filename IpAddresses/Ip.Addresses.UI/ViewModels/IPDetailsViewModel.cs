@@ -1,7 +1,9 @@
 ﻿using Ip.Addresses.UI.Commands;
+using Ip.Addresses.UI.DialogServices;
 using Ip.Addresses.UI.Mappers;
 using Ip.Addresses.UI.Models;
 using IpAddresses.Domain.Models;
+using IpAddresses.EF;
 using IpAddresses.EF.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
@@ -13,17 +15,20 @@ namespace Ip.Addresses.UI.ViewModels
     public class IPDetailsViewModel : ViewModelBase
     {
         private ObservableCollection<IpAddressDto> _ipAddresses;
-        private IPDetailMapper _mapper = new IPDetailMapper();
+        private readonly IPDetailMapper _mapper;
         private bool _isDeletebtnEnable;
         private IpAddressDto _SelectedIpAddress;
         private readonly IIpAddressService _ipAddressService;
+        private readonly IDialogService _dialogService;
         public IPDetailsViewModel()
         {
-            _ipAddressService = new IpAddressService();
+            _mapper = new IPDetailMapper();
+            _ipAddressService = new IpAddressService(new IpStackService.IpStackService(), new GenericDataService<IpAddress>(new IpAddressContextFactory()));
             _ipAddresses= new ObservableCollection<IpAddressDto>();
-            SubmitIpAddressCommand = new SubmitIpAddressCommand(this, _mapper, _ipAddressService);
-            GetIpAddressCommand = new GetIpAddressCommand(this, _mapper, _ipAddressService);      
-            DeleteIpAddressCommand = new DeleteIpAddressCommand(this, _mapper, _ipAddressService);
+            _dialogService= new DialogService();
+            SubmitIpAddressCommand = new SubmitIpAddressCommand(this, _mapper, _ipAddressService, _dialogService);
+            GetIpAddressCommand = new GetIpAddressCommand(this, _mapper, _ipAddressService, _dialogService);      
+            DeleteIpAddressCommand = new DeleteIpAddressCommand(this, _mapper, _ipAddressService, _dialogService);
             GetIpAddressCommand.Execute(this);
         }
 
